@@ -1,0 +1,146 @@
+$input-bg-color: $white;
+$input-text-color: $gray;
+$animation-bounce: cubic-bezier(0.4, -1, 0.6, 2);
+$animation-drop: cubic-bezier(0.4, -1, 0.6, 2);
+
+@keyframes blink {
+  49% { opacity: 0; }
+  50% { oppacity: 1; }
+  51% { oppacity: 1; }
+  52% { opacity: 0; }
+}
+
+.search-wrapper:focus-within ~ .search-overlay {
+  height:100%;
+  width:100%;
+  position:fixed;
+  left:0;
+  top:0;
+  z-index:1 !important;
+  background-color:black;
+  opacity: 0.55;
+}
+
+.search-wrapper {
+  margin-top: 20px;
+  width: 50%;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  &:focus-within {
+    width: 100%;
+    position: absolute;
+    z-index: 5;
+    display: block;
+
+    top:  20%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    transition: transform 0.5s $animation-drop;
+  }
+}
+
+.search-box {
+  position: relative;
+  width: 20%;
+  margin: 0 auto;
+
+  &:focus-within {
+    width: 40%;
+  }
+
+  &__input {
+    width: 100%;
+    background-color: transparent;
+    caret-color: $input-bg-color;
+    color: $input-text-color;
+    border: 0;
+    border-radius: 0.4em;
+    padding: 0.25em 0.8em;
+    font-size: 1em;
+    transition: box-shadow 0.5s ease;
+
+    // Adds shadow to input
+    // &:hover,
+    &:focus {
+      width: 100%;
+      background-color: $input-bg-color;
+      caret-color: $input-bg-color;
+      color: $input-text-color;
+      outline: 0;
+      box-shadow: 0 0.5em 1.5em 0.25em rgba($input-bg-color, 0.2);
+    }
+
+    &:hover {
+      + i {
+        background-color: darken($light-gray, 30%);
+
+        &::before {
+          border-color: darken($light-gray, 30%);
+        }
+      }
+    }
+
+    // Display Search Icon
+    + i {
+      position: absolute;
+      width: 0.125em;
+      height: 30%;
+      border-radius: 0.2em;
+      background-color: $input-text-color;
+
+      left: 0.9em;
+      top: 50%;
+      transform: rotateZ(-45deg) translateY(-50%);
+      transform-origin: top;
+      transition: transform 0.5s $animation-bounce;
+
+      &:hover {
+        background-color: $light-gray;
+
+        &::before {
+          border-color: $light-gray;
+        }
+      }
+
+      &::before {
+        content: "";
+        display: block;
+        position: relative;
+        top: -0.7em;
+        left: -0.3em;
+        width: 0.8em;
+        height: 0.8em;
+        border-radius: 100%;
+        border: 0.125em solid $input-text-color;
+        background-color: transparent;
+
+        transition: transform 0.5s $animation-bounce;
+      }
+    }
+
+    // Display custom caret
+    &:focus {
+      + i {
+        height: 70%;
+        transform: rotateZ(0) translateY(-50%);
+        animation: blink 1.1s infinite 0.5s;
+
+        &::before {
+          transform: rotateY(90deg);
+        }
+      }
+    }
+
+    // When value is not empty
+    &[value]:not([value=""]) {
+      caret-color: $input-text-color;
+
+      + i {
+        display: none;
+      }
+    }
+  }
+}
