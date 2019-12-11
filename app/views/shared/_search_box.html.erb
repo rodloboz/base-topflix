@@ -1,14 +1,28 @@
 
 
 <div class="search-wrapper">
-  <%= form_for :search, url: search_path, method: :get do |f| %>
+  <%= form_for :search, url: search_path,
+                        method: :get,
+                        remote: true,
+                        html: {
+                          data: {
+                            controller: 'autocomplete',
+                            autocomplete_url: autocomplete_path
+                          }
+                        } do |f| %>
     <div class="search-box" style="font-size: 24px;">
       <%= f.text_field  :query,
                         class: 'search-box__input',
-                        oninput: "this.setAttribute('value',this.value)"
+                        oninput: "this.setAttribute('value',this.value)",
+                        autocomplete: false,
+                        data: {
+                          target: 'autocomplete.input',
+                          action: 'keyup->autocomplete#load'
+                        }
       %>
       <i></i>
     </div>
+    <%= render 'shared/suggestions', suggestions: @suggestions %>
   <% end %>
 </div>
 <div class="search-overlay"></div>

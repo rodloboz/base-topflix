@@ -1,4 +1,4 @@
-class SearchService < BaseService
+class AutocompleteService < BaseService
   def initialize(term)
     @term = term
   end

@@ -1,0 +1,7 @@
+<div class="suggestions-wrapper" data-target="autocomplete.wrapper">
+  <div class=suggestions-list data-target="autocomplete.list">
+    <%= suggestions&.each do |suggestion| %>
+      <%= render 'shared/suggestion', suggestion: suggestion %>
+    <% end %>
+  </div>
+</div>

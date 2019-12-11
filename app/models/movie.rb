@@ -3,7 +3,7 @@ class Movie < ApplicationRecord
 
   scope :ordered, -> { order(rating: :desc) }
 
-  searchkick text_middle: %i[
+  SEARCH_FIELDS = %i[
     title
     synopsis
     genre
@@ -11,10 +11,13 @@ class Movie < ApplicationRecord
     director_last_name
   ]
 
+  searchkick text_middle: SEARCH_FIELDS, word_start: SEARCH_FIELDS
+
   def search_data
     attributes.merge(
       director_first_name: director.first_name,
       director_last_name: director.last_name,
+      name: name
     )
   end
 

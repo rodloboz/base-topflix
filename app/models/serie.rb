@@ -1,9 +1,17 @@
 class Serie < ApplicationRecord
-  searchkick text_middle: %i[
+  SEARCH_FIELDS = %i[
     title
     synopsis
     genre
   ]
+
+  searchkick text_middle: SEARCH_FIELDS, word_start: SEARCH_FIELDS
+
+  def search_data
+    attributes.merge(
+      name: name
+    )
+  end
 
   def name
     title

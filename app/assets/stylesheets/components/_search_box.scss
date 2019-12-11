@@ -22,7 +22,7 @@ $animation-drop: cubic-bezier(0.4, -1, 0.6, 2);
 }
 
 .search-wrapper {
-  margin-top: 20px;
+  margin: 20px 0 0 20px;
   width: 50%;
   text-align: center;
   position: absolute;
@@ -30,12 +30,12 @@ $animation-drop: cubic-bezier(0.4, -1, 0.6, 2);
   left: 0;
 
   &:focus-within {
-    width: 100%;
     position: absolute;
+    height: 50%;
     z-index: 5;
     display: block;
 
-    top:  20%;
+    top:  50%;
     left: 50%;
     transform: translate(-50%,-50%);
     transition: transform 0.5s $animation-drop;
@@ -44,11 +44,11 @@ $animation-drop: cubic-bezier(0.4, -1, 0.6, 2);
 
 .search-box {
   position: relative;
-  width: 20%;
+  width: 100%;
   margin: 0 auto;
 
   &:focus-within {
-    width: 40%;
+    width: 100%;
   }
 
   &__input {
@@ -56,6 +56,7 @@ $animation-drop: cubic-bezier(0.4, -1, 0.6, 2);
     background-color: transparent;
     caret-color: $input-bg-color;
     color: $input-text-color;
+    color: transparent;
     border: 0;
     border-radius: 0.4em;
     padding: 0.25em 0.8em;
@@ -143,4 +144,46 @@ $animation-drop: cubic-bezier(0.4, -1, 0.6, 2);
       }
     }
   }
+}
+
+.suggestions-wrapper {
+  opacity: 0;
+}
+
+.suggestions-list {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.suggestions-item {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+
+  &:hover {
+    cursor: pointer;
+    background: rgba($input-text-color, .2);
+  }
+
+  div:first-child {
+    width: 30px;
+    flex-grow: 0;
+    margin-right: 10px;
+  }
+}
+
+.search-box:focus-within + .suggestions-wrapper.open {
+  opacity: 1;
+  width: 100%;
+  background-color: $input-bg-color;
+  color: $input-text-color;
+  outline: 0;
+  box-shadow: 0 0.5em 1.5em 0.25em rgba($input-bg-color, 0.2);
+
+  position: relative;
+  top: -10px;
+  padding: 20px;
 }
